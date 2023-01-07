@@ -1,8 +1,8 @@
 {
-    "name": "p2p",
+    "name": "market007",
     "version": "0.1.0",
     "repository": {},
-    "author": "p2p",
+    "author": "market007",
     "license": "MIT",
     "scripts": {
         "start": "npm run serve",
