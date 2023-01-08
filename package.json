@@ -20,10 +20,6 @@
         "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
     },
     "dependencies": {
-        "@ethersproject/web": "^5.6.1",
-        "@google-analytics/data": "^3.0.0",
-        "@sendgrid/mail": "^7.7.0",
-        "@uniswap/sdk": "^3.0.3",
         "async": "^3.1.0",
         "base64-to-image": "^1.0.2",
         "bcrypt-nodejs": "^0.0.3",
@@ -58,8 +54,6 @@
         "mongoose": "^5.7.1",
         "multer": "^1.4.5-lts.1",
         "node-blob": "0.0.2",
-        "nodemailer": "^6.6.1",
-        "nodemailer-smtp-transport": "^2.7.4",
         "passport": "^0.4.0",
         "passport-facebook": "^3.0.0",
         "passport-local": "^1.0.0",
@@ -69,7 +63,6 @@
         "request-promise": "^4.2.4",
         "socket.io": "^4.4.1",
         "solc": "^0.7.0",
-        "westwallet-api": "^1.0.5",
         "window": "^4.2.7",
         "winston": "^3.2.1"
     },

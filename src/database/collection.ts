@@ -279,3 +279,98 @@ export const Popular = (text: string, from: string)=>{
     });
 };
 
+export const New = ()=>{
+
+    return new Promise((resolve, reject)=>{
+
+        let collectionsMap = {};
+        let collectionsAuthors = {};
+
+        Collection.find({ type: { $ne: "launchpad" } })
+        .exec((err, collesctions)=>{
+
+            if(!err){
+
+                 let addresses = [];
+                 collesctions.forEach((collection)=>{
+                    addresses.push(collection.address);
+                    collectionsMap[collection.address] = collection.name;
+                    collectionsAuthors[collection.address] = collection.author;
+                 });
+
+                 Nft.find({ address: { "$in": addresses }})
+                 .exec((err, nfts)=>{
+                    if(!err){
+                        
+                        let result = [];
+                        nfts.forEach((nft, i)=>{
+                            if(i < 4){
+                                let nftObj = nft.toObject();
+                                nftObj.collection = collectionsMap[nftObj.address];
+                                nftObj.author = collectionsAuthors[nftObj.address];
+                                result.push(nftObj);
+                            }
+                        });
+                        
+                        resolve(result);
+
+                    }else{
+                        reject(err);
+                    }
+                 });
+
+             }else{
+                 reject(err);
+             }
+        });
+
+    });
+};
+
+export const PopularCollections = (from: string)=>{
+
+    return new Promise((resolve, reject)=>{
+
+        let date = new Date(from);
+        
+        let filter =  {  "createdAt": { $gte: date }, type: { $ne: "launchpad" } };
+        let collectionsMap = {};
+        let collectionsAuthors = {};
+
+        Collection.find(filter)
+        .limit(4)
+        .exec((err, collesctions)=>{
+            if(!err){
+
+                let addresses = [];
+                collesctions.forEach((collection)=>{
+                   addresses.push(collection.address);
+                   collectionsMap[collection.address] = collection.name;
+                   collectionsAuthors[collection.address] = collection.author;
+                });
+
+                Nft.find({ address: { "$in": addresses }})
+                .exec((err, nfts)=>{
+
+                   let result = [];
+                   collesctions.forEach((doc)=>{
+                       let collection = doc.toObject();
+                       let nftsImages = nfts.filter((n)=>{ return n.address == doc.address });
+                       if(nftsImages.length){
+                           collection.nfts = nftsImages;
+                           result.push(collection);
+                       }
+                   });
+
+                   resolve(result);
+
+                });
+
+                
+             }else{
+                 reject(err);
+             }
+        });
+
+    });
+};

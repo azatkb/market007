@@ -146,4 +146,36 @@ routes.get("/popular", (req, res) => {
     });
 });
 
+routes.get("/popular", (req, res) => {
+
+    let text = req.query.text;
+    let from = req.query.from;
+
+    collectionFunctions.Popular(text, from).then((response) => {
+        return res.status(200).send(response);
+    }).catch((err) => {
+        return res.status(400).send(err);
+    });
+});
+
+routes.get("/collections-popular", (req, res) => {
+
+    let from = req.query.from;
+
+    collectionFunctions.PopularCollections(from).then((response) => {
+        return res.status(200).send(response);
+    }).catch((err) => {
+        return res.status(400).send(err);
+    });
+});
+
+routes.get("/new", (req, res) => {
+
+    collectionFunctions.New().then((response) => {
+        return res.status(200).send(response);
+    }).catch((err) => {
+        return res.status(400).send(err);
+    });
+});
+
 export default routes;

@@ -103,3 +103,23 @@ export const Delete = (_id: string, account: string)=>{
         });
     });
 }
+
+export const New = ()=>{
+    return new Promise((resolve, reject)=>{
+        collectionsDb.New().then((saved: any)=>{
+            resolve(saved)
+        }).catch((err)=>{
+            reject(err);
+        });
+    });
+}
+
+export const PopularCollections = (from: string)=>{
+    return new Promise((resolve, reject)=>{
+        collectionsDb.PopularCollections(from).then((saved: any)=>{
+            resolve(saved)
+        }).catch((err)=>{
+            reject(err);
+        });
+    });
+}
