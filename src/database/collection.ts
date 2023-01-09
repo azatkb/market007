@@ -279,14 +279,14 @@ export const Popular = (text: string, from: string)=>{
     });
 };
 
-export const New = ()=>{
+export const ByType = (type: string, limit: number)=>{
 
     return new Promise((resolve, reject)=>{
 
         let collectionsMap = {};
         let collectionsAuthors = {};
 
-        Collection.find({ type: { $ne: "launchpad" } })
+        Collection.find({ type: type })
         .exec((err, collesctions)=>{
 
             if(!err){
@@ -299,17 +299,17 @@ export const New = ()=>{
                  });
 
                  Nft.find({ address: { "$in": addresses }})
+                 .sort({ createdAt:-1})
+                 .limit(limit)
                  .exec((err, nfts)=>{
                     if(!err){
                         
                         let result = [];
                         nfts.forEach((nft, i)=>{
-                            if(i < 4){
-                                let nftObj = nft.toObject();
-                                nftObj.collection = collectionsMap[nftObj.address];
-                                nftObj.author = collectionsAuthors[nftObj.address];
-                                result.push(nftObj);
-                            }
+                            let nftObj = nft.toObject();
+                            nftObj.collection = collectionsMap[nftObj.address];
+                            nftObj.author = collectionsAuthors[nftObj.address];
+                            result.push(nftObj);
                         });
                         
                         resolve(result);

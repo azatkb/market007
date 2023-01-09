@@ -169,9 +169,12 @@ routes.get("/collections-popular", (req, res) => {
     });
 });
 
-routes.get("/new", (req, res) => {
+routes.get("/type", (req, res) => {
 
-    collectionFunctions.New().then((response) => {
+    let type = req.query.type;
+    let limit = parseInt(req.query.limit);
+
+    collectionFunctions.ByType(type, limit).then((response) => {
         return res.status(200).send(response);
     }).catch((err) => {
         return res.status(400).send(err);

@@ -104,9 +104,9 @@ export const Delete = (_id: string, account: string)=>{
     });
 }
 
-export const New = ()=>{
+export const ByType = (type: string, limit: number)=>{
     return new Promise((resolve, reject)=>{
-        collectionsDb.New().then((saved: any)=>{
+        collectionsDb.ByType(type, limit).then((saved: any)=>{
             resolve(saved)
         }).catch((err)=>{
             reject(err);
