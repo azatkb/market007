@@ -27,4 +27,24 @@ routes.get("/user-profile", (req, res) => {
     });
 });
 
+routes.get("/get", (req, res) => {
+    let address = req.query.address;
+    if(!address){
+        return res.status(400).send("address parametr is required");
+    }
+    usersFunctions.Get(address).then((response) => {
+        return res.status(200).send(response);
+    }).catch((err) => {
+        return res.status(400).send(err);
+    });
+});
+
+routes.get("/users", (req, res) => {
+    usersFunctions.Users().then((response) => {
+        return res.status(200).send(response);
+    }).catch((err) => {
+        return res.status(400).send(err);
+    });
+});
+
 export default routes;

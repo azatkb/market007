@@ -126,7 +126,7 @@ export const Collections = (text: string, from: string)=>{
         let date = new Date(from);
         
         let filter = text ? { 
-            "$or": [ { name : { "$regex" : text }}, { author : { "$regex" : text }}],
+            "$or": [ { name : { "$regex" : new RegExp(text, "i") }}, { author : { "$regex" : new RegExp(text, "i") }}],
             "createdAt": { $gte: date }
         } : {  "createdAt": { $gte: date } };
 
@@ -236,7 +236,7 @@ export const Popular = (text: string, from: string)=>{
         let date = new Date(from);
         
         let filter = text ? { 
-            "$or": [ { name : { "$regex" : text }}, { author : { "$regex" : text }}],
+            "$or": [ { name : { "$regex" : new RegExp(text, "i") }}, { author : { "$regex" : new RegExp(text, "i") }}],
             "createdAt": { $gte: date }
         } : {  "createdAt": { $gte: date } };
 

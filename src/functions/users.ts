@@ -19,3 +19,23 @@ export const GetProfile = (address: string)=>{
         });
     });
 };
+
+export const Get = (address: string)=>{
+    return new Promise((resolve, reject)=>{
+        usersDb.Get(address).then((user: any)=>{
+            resolve(user);
+        }).catch((err)=>{
+            reject(err);
+        });
+    });
+};
+
+export const Users = ()=>{
+    return new Promise((resolve, reject)=>{
+        usersDb.Users().then((users: any)=>{
+            resolve(users);
+        }).catch((err)=>{
+            reject(err);
+        });
+    });
+};
