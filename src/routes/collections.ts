@@ -1,6 +1,5 @@
 import express from "express";
 import * as collectionFunctions from "../functions/collection";
-
 const routes = express.Router();
 
 routes.post("/create", (req, res)=>{
@@ -22,6 +21,10 @@ routes.post("/create", (req, res)=>{
     if(!data.author){
         return res.status(400).send("author parametr is required");
     }
+    if(!data.logo){
+        return res.status(400).send("logo parametr is required");
+    }
+
     collectionFunctions.CreateCollection(data).then((doc: any)=>{
         return res.status(200).send(doc);
     }).catch((err)=>{

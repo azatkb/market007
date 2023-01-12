@@ -1,32 +1,24 @@
 import mongoose from "mongoose";
 import * as collectionsDb from "../database/collection";
-import { saveImage } from "../util/image";
+import { saveImage, resize } from "../util/image";
 
 export const CreateCollection = (data: any)=>{
     return new Promise((resolve, reject)=>{
-        if(data.logo){
-            saveImage(data.logo, "collections", new mongoose.Types.ObjectId()).then((path: string)=>{
-                data.logo = path;
-                collectionsDb.CreateCollection(data).then((saved: any)=>{
-                    resolve(saved)
-                }).catch((err)=>{
-                    reject(err);
-                });
-            });
-        }else{
+        resize(data.logo).then(( base64 )=>{
+            data.logo = base64;
             collectionsDb.CreateCollection(data).then((saved: any)=>{
                 resolve(saved)
             }).catch((err)=>{
                 reject(err);
             });
-        }
+        });
     });
 }
 
 export const UpdateCollection = (data: any)=>{
     return new Promise((resolve, reject)=>{
-        if(data.logo.indexOf("base64") > (-1)){
-            saveImage(data.logo, "collections", new mongoose.Types.ObjectId()).then((path: string)=>{
+        if(data.file){
+            resize(data.file).then((path: string)=>{
                 data.logo = path;
                 collectionsDb.UpdateCollection(data).then((saved: any)=>{
                     resolve(saved)

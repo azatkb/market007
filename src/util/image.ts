@@ -1,5 +1,7 @@
 import path from "path";
 import base64ToImage from "base64-to-image";
+const sharp = require('sharp');
+
 export const saveImage = (baseImage, folder, name )=> {
     return new Promise((resolve, reject)=>{
         const dirname = path.resolve('./');
@@ -16,3 +18,21 @@ export const saveImage = (baseImage, folder, name )=> {
         }
     });
 }
+
+export const resize = (logo)=> {
+    return new Promise((resolve, reject)=>{
+        const parts = logo.split(',')
+        let imgBuffer = Buffer.from(parts[1], 'base64');
+        sharp(imgBuffer)
+        .resize(100, 100)
+        .toBuffer()
+        .then((data) => {
+            resolve(parts[0] + "," + data.toString('base64'))
+        })
+        .catch(err =>{
+            reject(err);
+        })
+    });
+}
+
+
