@@ -96,7 +96,7 @@ export const GetCollections = (type: string)=>{
 
                  });
 
-                 Nft.find({ address: { "$in": addresses }})
+                 Nft.find({ address: { "$in": addresses }, status: "listed"})
                  .exec((err, nfts)=>{
 
                     let result = [];
@@ -253,7 +253,7 @@ export const Popular = (text: string, from: string)=>{
                     collectionsMap[collection.address] = collection.name;
                  });
 
-                 Nft.find({ address: { "$in": addresses }})
+                 Nft.find({ address: { "$in": addresses }, status: "listed"})
                  .exec((err, nfts)=>{
                     if(!err){
                         
@@ -298,7 +298,7 @@ export const ByType = (type: string, limit: number)=>{
                     collectionsAuthors[collection.address] = collection.author;
                  });
 
-                 Nft.find({ address: { "$in": addresses }})
+                 Nft.find({ address: { "$in": addresses }, status: "listed"})
                  .sort({ createdAt:-1})
                  .limit(limit)
                  .exec((err, nfts)=>{
@@ -349,7 +349,7 @@ export const PopularCollections = (from: string)=>{
                    collectionsAuthors[collection.address] = collection.author;
                 });
 
-                Nft.find({ address: { "$in": addresses }})
+                Nft.find({ address: { "$in": addresses }, status: "listed" })
                 .exec((err, nfts)=>{
 
                    let result = [];
@@ -365,7 +365,6 @@ export const PopularCollections = (from: string)=>{
                    resolve(result);
 
                 });
-
                 
              }else{
                  reject(err);
