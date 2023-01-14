@@ -1,12 +1,16 @@
 import * as nftDb from "../database/nft";
+import { saveImage, resizeNft } from "../util/image";
 
 export const CreateNft = (data: any)=>{
     return new Promise((resolve, reject)=>{
-        nftDb.CreateNft(data).then((saved: any)=>{
-            resolve(saved)
-        }).catch((err)=>{
-            reject(err);
-        });
+        resizeNft(data.data.url).then((url)=>{
+            data.data.url = url;
+            nftDb.CreateNft(data).then((saved: any)=>{
+                resolve(saved)
+            }).catch((err)=>{
+                reject(err);
+            });
+        })
     });
 }
 

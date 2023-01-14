@@ -35,4 +35,20 @@ export const resize = (logo)=> {
     });
 }
 
+export const resizeNft = (logo)=> {
+    return new Promise((resolve, reject)=>{
+        const parts = logo.split(',')
+        let imgBuffer = Buffer.from(parts[1], 'base64');
+        sharp(imgBuffer)
+        .resize(240, 250)
+        .toBuffer()
+        .then((data) => {
+            resolve(parts[0] + "," + data.toString('base64'))
+        })
+        .catch(err =>{
+            reject(err);
+        })
+    });
+}
+
 

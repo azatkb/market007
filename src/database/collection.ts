@@ -253,6 +253,8 @@ export const Popular = (text: string, from: string)=>{
                     collectionsMap[collection.address] = collection.name;
                  });
 
+                 console.log(addresses)
+
                  Nft.find({ address: { "$in": addresses }, status: "listed"})
                  .exec((err, nfts)=>{
                     if(!err){
@@ -338,7 +340,6 @@ export const PopularCollections = (from: string)=>{
         let collectionsAuthors = {};
 
         Collection.find(filter)
-        .limit(4)
         .exec((err, collesctions)=>{
             if(!err){
 
